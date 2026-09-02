@@ -1,0 +1,169 @@
+@use 'sass:map';
+@use 'sass:list';
+@use 'sass:color';
+@use 'theme';
+
+// Badges are wrapped in links that filter by type. The white ring separates the
+// focus indicator from the badge, matching the activation switch. `:focus` is
+// included because a click otherwise leaves the WordPress ring, which hugs the
+// badge.
+@mixin badge-link {
+	display: inline-flex;
+	border-radius: 3px;
+
+	&:focus,
+	&:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 2px #fff, 0 0 0 4px theme.$accent;
+	}
+}
+
+.badge {
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	border-radius: 3px;
+	text-align: center;
+	min-inline-size: 43px;
+	min-block-size: 24px;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	padding-block: 0;
+	padding-inline: 3px;
+	box-sizing: border-box;
+	gap: 5px;
+	line-height: 1;
+
+	@at-root .row-actions & {
+		color: #8c8c8c;
+		padding-inline: 0;
+		text-transform: capitalize;
+		font-weight: 500;
+	}
+
+	.dashicons {
+		font-size: 18px;
+		inline-size: 18px;
+		block-size: 18px;
+	}
+}
+
+.network-shared {
+	color: theme.$accent;
+	font-size: 22px;
+	inline-size: 100%;
+	cursor: help;
+}
+
+.small-badge {
+	block-size: auto;
+	inline-size: auto;
+	font-size: smaller;
+	padding-block: 0;
+	padding-inline: 0.5em;
+}
+
+.wp-core-ui .button.nav-tab-button {
+	margin-inline-start: 0.5em;
+	float: inline-end;
+	color: #a7aaad;
+	background: #f6f7f7;
+	border-color: #f6f7f7;
+	align-self: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 2px;
+}
+
+.nav-tab-button .dashicons-external {
+	font-size: 15px;
+	color: #666;
+}
+
+@each $name, $colors in theme.$badges {
+	$text-color: #fff;
+	$background-color: list.nth($colors, 1);
+
+	@if list.length($colors) > 1 {
+		$text-color: list.nth($colors, 2);
+	}
+
+	.badge.#{$name}-badge,
+	.nav-tab-inactive:hover .badge.#{$name}-badge,
+	:hover > .inverted-badges .#{$name}-badge {
+		color: $text-color;
+		background-color: $background-color;
+	}
+
+	a.badge.#{$name}-badge:hover,
+	button.badge.#{$name}-badge:hover {
+		color: $text-color;
+		background-color: color.adjust($background-color, $lightness: -5%);
+	}
+}
+
+// #646970 (WP gray-50) keeps white badge text at 5.5:1 so locked/unlicensed
+// states stay WCAG AA without hover; #a7aaad was 2.3:1.
+.nav-tab-inactive .badge,
+.inverted-badges .badge {
+	color: #fff;
+	background-color: #646970;
+	border-color: #fff !important;
+
+	.dashicons {
+		color: #fff;
+	}
+}
+
+.nav-tab-inactive {
+	$colors: map.get(theme.$badges, 'pro');
+	$text-color: list.nth($colors, 2);
+	$background-color: list.nth($colors, 1);
+
+	background: transparent;
+
+	.badge.pro-badge {
+		color: $text-color;
+		background-color: $background-color;
+	}
+
+	&:hover {
+		&.button, .dashicons-external {
+			color: #3c434a;
+		}
+
+		.badge.pro-badge {
+			color: $background-color;
+			background-color: $text-color;
+		}
+	}
+}
+
+// Override WordPress' .wp-core-ui .button .dashicons { line-height: 1.9 } —
+// inside a button the inflated line-box would shift the glyph below the
+// badge's bottom border. Placed at end-of-file so it follows all other
+// .dashicons rules in source order (no-descending-specificity).
+.wp-core-ui .button .badge .dashicons {
+	line-height: 1;
+}
+
+// Pro badge consolidated to the navigation pro-chip style: a light accent pill
+// in every context, overriding the badge colour map and the inverted/nav-tab
+// variants (whose white !important border must be beaten here). This is a
+// deliberate final override, so it intentionally follows higher-specificity
+// context rules above.
+/* stylelint-disable no-descending-specificity */
+.badge.pro-badge,
+.inverted-badges .badge.pro-badge,
+.nav-tab-inactive .badge.pro-badge {
+	color: theme.$accent;
+	background-color: #eff5f9;
+	border: 1px solid rgb(34 113 177 / 10%) !important;
+	border-radius: 999px;
+	padding-block: 3px;
+	padding-inline: 10px;
+	line-height: normal;
+}
+/* stylelint-enable no-descending-specificity */

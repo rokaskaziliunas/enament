@@ -1,0 +1,154 @@
+@use 'theme';
+
+.code-snippets-upsell-banner {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 12px;
+	gap: 10px;
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+
+	p {
+		margin: 0;
+	}
+
+	.components-external-link__contents {
+		text-decoration: none;
+	}
+
+	.button-primary {
+		background-color: theme.$secondary;
+		border: 0;
+		font-weight: bold;
+		margin-inline-start: auto;
+
+		&:hover, &:focus {
+			background-color: #0ca0a9;
+		}
+	}
+
+	.button-link.button-small {
+		text-decoration: none;
+		font-weight: normal;
+		padding: 0;
+		color: #646970;
+		line-height: 1;
+		border: none;
+	}
+}
+
+.code-snippets-upsell-dialog,
+.wrap .code-snippets-upsell-page {
+	h1 {
+		font-size: 32px;
+		margin: 0;
+
+		span {
+			color: #d46f4d;
+		}
+	}
+
+	p {
+		margin-block: 0;
+		margin-inline: 2em;
+		font-size: 16px;
+		max-inline-size: 750px;
+	}
+
+	img {
+		inline-size: 82px;
+	}
+
+	ul {
+		display: grid;
+		inline-size: 100%;
+		grid-auto-flow: column;
+		grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+		max-inline-size: 750px;
+	}
+
+	li {
+		display: flex;
+		flex-flow: row;
+		gap: 11px;
+		font-size: 14px;
+	}
+
+	li::before {
+		content: '✓';
+		color: #fff;
+		inline-size: 24px;
+		block-size: 24px;
+		border-radius: 50%;
+		background-color: #0ca0a9;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.button.button-large {
+		background-color: #d46f4d;
+		padding-block: 15px;
+		padding-inline: 20px;
+		font-size: 16px;
+		line-height: inherit;
+		margin-block: 16px 24px;
+		margin-inline: auto;
+		border-color: currentcolor;
+
+		// Matches the specificity of the native-control override in _wp-admin.scss
+		// (.wrap .button-primary:not(.button-link):hover:not(:disabled)) so this
+		// upsell-specific hover styling isn't overridden by the shared button rule.
+		&:hover:not(.button-link, :disabled) {
+			background-color: #0ca0a9;
+			border-color: #0ca0a9;
+		}
+	}
+}
+
+.code-snippets-upsell-page,
+.code-snippets-upsell-dialog .components-modal__content {
+	margin: 0;
+	padding-block: 48px;
+	padding-inline: 80px;
+}
+
+.code-snippets-upsell-page,
+.code-snippets-upsell-dialog {
+	color: #1c3f41;
+	line-height: 1.5;
+	background: linear-gradient(116.04deg, #edfcff -0.75%, #fcdfd4 93.04%);
+	box-shadow: 0 4px 80px rgb(0 0 0 / 10%);
+	border-radius: 8px;
+}
+
+// Bleed the upsell to the full width of the admin content area and fill the
+// remaining viewport height, so it reads as a full page rather than a small
+// boxed card floating in the subpage. 168px accounts for the WP admin bar
+// (32px) plus the plugin toolbar ($toolbar-block-size, 136px in _toolbar.scss).
+.code-snippets-upsell-page {
+	box-sizing: border-box;
+	margin-inline-start: -22px;
+	inline-size: calc(100% + 42px);
+	min-block-size: calc(100vh - 168px);
+	border-radius: 0;
+	justify-content: center;
+}
+
+.code-snippets-upsell-page,
+.code-snippets-upsell-dialog .components-modal__content > div:last-child  {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	gap: 18px;
+}
+
+.code-snippets-upsell-dialog {
+	max-block-size: unset;
+	font-family: 'SF Pro', sans-serif;
+	inline-size: 794px;
+	overflow: auto;
+}
