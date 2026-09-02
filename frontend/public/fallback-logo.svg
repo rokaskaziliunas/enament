@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Team logo unavailable</title>
+  <desc id="desc">Placeholder team logo</desc>
+  <rect width="128" height="128" rx="16" fill="#172033"/>
+  <path d="M64 18 102 32v28c0 24-15 40-38 50C41 100 26 84 26 60V32l38-14Z" fill="#2d6cdf"/>
+  <path d="m64 35 18 7v18c0 12-6 21-18 28-12-7-18-16-18-28V42l18-7Z" fill="#f4f7fb"/>
+  <path d="M57 48h14v11h11v14H71v11H57V73H46V59h11V48Z" fill="#172033"/>
+</svg>
